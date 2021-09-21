@@ -37,7 +37,42 @@
                         </tr>
                     </c:forEach>
                     </tbody>
+                    <form action="/board/list" method="get">
+                        <div class="form-group">
+                            <label>검색</label>
+                            <select name="type" class="custom-select">
+                                <option value="">----</option>
+                                <option value="T" ${pageRequestDTO.type=="T"?"selected":""}>제목</option>
+                                <option value="TC" ${pageRequestDTO.type=="TC"?"selected":""}>제목 & 내용</option>
+                                <option value="C" ${pageRequestDTO.type=="C"?"selected":""}>내용</option>
+                                <option value="TCW" ${pageRequestDTO.type=="TCW"?"selected":""}>제목 & 내용 & 작성자</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control" name="keyword" value="${pageRequestDTO.keyword}">
+                                <span class="input-group-append"><button type="submit" class="btn btn-info btn-flat">검색하기</button></span>
+                            </div>
+                        </div>
+                    </form>
                 </table>
+                <div class="card-footer clearfix">
+                    <ul class="pagination pagination-sm m-0 float-right">
+
+                        <c:if test="${pageMaker.prev}">
+                            <li class="page-item"><a class="page-link" href="javascript:movePage(${pageMaker.start -1})"> << </a></li>
+                        </c:if>
+
+                        <c:forEach begin="${pageMaker.start}" end="${pageMaker.end}" var="num">
+                            <li class="page-item ${pageMaker.page == num?'active':''}"><a class="page-link" href="javascript:movePage(${num})">${num}</a></li>
+                        </c:forEach>
+
+                        <c:if test="${pageMaker.next}">
+                            <li class="page-item"><a class="page-link" href="javascript:movePage(${pageMaker.end +1})"> >> </a></li>
+                        </c:if>
+
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -53,6 +88,11 @@
 <form id="actionForm" action="/board/list" method="get">
     <input type="hidden" name="page" value="${pageMaker.page}">
     <input type="hidden" name="size" value="${pageMaker.size}">
+
+    <c:if test="${pageRequestDTO.type != null}">
+        <input type="hidden" name="type" value="${pageRequestDTO.type}">
+        <input type="hidden" name="keyword" value="${pageRequestDTO.keyword}">
+    </c:if>
 </form>
 
 
@@ -66,6 +106,11 @@
         actionForm.setAttribute("action","/board/read")
         actionForm.innerHTML += `<input type='hidden' name='qno' value='\${qno}'>`
 
+        actionForm.submit()
+    }
+
+    function movePage(pageNum){
+        actionForm.querySelector("input[name='page']").setAttribute("value",pageNum)
         actionForm.submit()
     }
 

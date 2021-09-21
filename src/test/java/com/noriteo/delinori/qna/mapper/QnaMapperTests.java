@@ -23,7 +23,7 @@ public class QnaMapperTests {
     @Test
     public void testDummies() {
 
-        IntStream.rangeClosed(1,100).forEach(i -> {
+        IntStream.rangeClosed(1,30).forEach(i -> {
             Qna qna = Qna.builder()
                     .title("title" + i)
                     .content("content" + i)
@@ -57,15 +57,5 @@ public class QnaMapperTests {
 
         log.info("================delete test================");
         log.info(qnaMapper.delete(qno));
-    }
-
-    @Test
-    public void testUpdate(){
-        Qna qna = Qna.builder()
-                .qno(200L)
-                .title("수정테스트 제목")
-                .content("수정테스트 내용 : 200")
-                .build();
-        log.info(qnaMapper.update(qna));
     }
 }

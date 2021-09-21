@@ -4,6 +4,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.noriteo.delinori.qna.mapper.QnaMapper">
 
+    <sql id="search">
+        <if test="type != null">
+            <foreach collection="arr" item="item" separator=" OR " open="WHERE (" close=")">
+                <if test="item == 'T'.toString()">
+                    title like concat('%',#{keyword},'%')
+                </if>
+                <if test="item == 'C'.toString()">
+                    content like concat('%',#{keyword},'%')
+                </if>
+                <if test="item == 'W'.toString()">
+                    writer like concat('%',#{keyword},'%')
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
     <insert id="insert">
         insert tbl_qna (title,content,writer)
         values (#{title},#{content},#{writer})
@@ -14,11 +30,13 @@
 
     <select id="getList" resultType="com.noriteo.delinori.qna.domain.Qna">
         select * from tbl_qna
+        <include refid="search"></include>
         order by qno desc limit #{skip},#{size}
     </select>
 
     <select id="getCount" resultType="int">
         select count(qno) from tbl_qna
+        <include refid="search"></include>
     </select>
 
     <select id="select" resultType="com.noriteo.delinori.qna.domain.Qna">
