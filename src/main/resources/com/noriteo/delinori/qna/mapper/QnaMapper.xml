@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.noriteo.delinori.qna.mapper.QnaMapper">
+
+    <insert id="insert">
+        insert tbl_qna (title,content,writer)
+        values (#{title},#{content},#{writer})
+        <selectKey order="AFTER" resultType="long" keyProperty="qno">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <select id="getList" resultType="com.noriteo.delinori.qna.domain.Qna">
+        select * from tbl_qna
+        order by qno desc limit #{skip},#{size}
+    </select>
+
+    <select id="getCount" resultType="int">
+        select count(qno) from tbl_qna
+    </select>
+
+    <select id="select" resultType="com.noriteo.delinori.qna.domain.Qna">
+        select * from tbl_qna where qno=#{qno}
+    </select>
+
+    <delete id="delete">
+        delete from tbl_qna where qno=#{qno}
+    </delete>
+ </mapper>
