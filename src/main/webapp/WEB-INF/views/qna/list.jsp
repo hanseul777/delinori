@@ -8,7 +8,6 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">문의사항</h1>
-        <a href="/board/register" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">글쓰기</a>
     </div>
 
     <!-- DataTales Example -->
@@ -37,7 +36,7 @@
                         </tr>
                     </c:forEach>
                     </tbody>
-                    <form action="/board/list" method="get">
+                    <form action="/qna/list" method="get">
                         <div class="form-group">
                             <label>검색</label>
                             <select name="type" class="custom-select">
@@ -48,12 +47,16 @@
                                 <option value="TCW" ${pageRequestDTO.type=="TCW"?"selected":""}>제목 & 내용 & 작성자</option>
                             </select>
                         </div>
-                        <div class="col-sm-9">
-                            <div class="input-group input-group-sm">
-                                <input type="text" class="form-control" name="keyword" value="${pageRequestDTO.keyword}">
-                                <span class="input-group-append"><button type="submit" class="btn btn-info btn-flat">검색하기</button></span>
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="검색내용을 입력하세요."
+                                       aria-label="Search" aria-describedby="basic-addon2" name="keyword" value="${pageRequestDTO.keyword}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        <hr>
                     </form>
                 </table>
                 <div class="card-footer clearfix">
@@ -85,7 +88,7 @@
 
 </div>
 <!-- End of Main Content -->
-<form id="actionForm" action="/board/list" method="get">
+<form id="actionForm" action="/qna/list" method="get">
     <input type="hidden" name="page" value="${pageMaker.page}">
     <input type="hidden" name="size" value="${pageMaker.size}">
 
@@ -103,7 +106,7 @@
     const actionForm = document.querySelector("#actionForm")
 
     function moveRead(qno){
-        actionForm.setAttribute("action","/board/read")
+        actionForm.setAttribute("action","/qna/read")
         actionForm.innerHTML += `<input type='hidden' name='qno' value='\${qno}'>`
 
         actionForm.submit()

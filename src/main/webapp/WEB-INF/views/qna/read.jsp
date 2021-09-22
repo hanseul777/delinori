@@ -49,7 +49,7 @@
 </div>
 
 
-<form id="actionForm" action="/board/list" method="get">
+<form id="actionForm" action="/qna/list" method="get">
     <input type="hidden" name="page" value="${pageRequestDTO.page}">
     <input type="hidden" name="size" value="${pageRequestDTO.size}">
 </form>
@@ -65,7 +65,7 @@
         e.preventDefault()
         e.stopPropagation()
 
-        form.setAttribute("action","/board/remove")
+        form.setAttribute("action","/qna/remove")
         form.setAttribute("method","post")
         form.submit()
 

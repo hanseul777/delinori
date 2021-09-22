@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-<h1>500 ERROR</h1>
+<h1>500 EROR</h1>
 </body>
 </html>

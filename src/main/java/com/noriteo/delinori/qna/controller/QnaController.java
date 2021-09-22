@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/board/*")
+@RequestMapping("/qna/*")
 @Log4j2
 @RequiredArgsConstructor
 public class QnaController {
@@ -31,7 +31,7 @@ public class QnaController {
         log.info("======================c : registserPost===============");
         log.info(qno);
 
-        return "redirect:/board/list";
+        return "redirect:/qna/list";
     }
 
     @GetMapping("/register")
@@ -73,7 +73,7 @@ public class QnaController {
             log.info("remove success");
             redirectAttributes.addFlashAttribute("result","removed");
         }
-        return "redirect:/board/list";
+        return "redirect:/qna/list";
     }
 
 }
