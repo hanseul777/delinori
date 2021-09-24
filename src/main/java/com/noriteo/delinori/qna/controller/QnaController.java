@@ -22,23 +22,6 @@ public class QnaController {
 
     private final QnaService qnaService;
 
-    @PostMapping("/register")
-    public String registerPost(QnaDTO qnaDTO){
-        log.info("qnaDTO : " + qnaDTO);
-
-        Long qno = qnaService.register(qnaDTO);
-
-        log.info("======================c : registserPost===============");
-        log.info(qno);
-
-        return "redirect:/qna/list";
-    }
-
-    @GetMapping("/register")
-    public void registerGet(){
-
-    }
-
     @GetMapping("/list")
     public void getList(PageRequestDTO pageRequestDTO, Model model){
 

@@ -108,9 +108,7 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-      <a class="nav-link" href="/charts">
-        <i class="fas fa-fw fa-chart-area"></i>
-        <span>통계</span></a>
+      <a class="nav-link" href="/charts"><i class="fas fa-fw fa-chart-area"></i><span>통계</span></a>
     </li>
 
     <!-- Nav Item - Tables -->
@@ -274,7 +272,7 @@
                 <div>
                   <div class="text-truncate">Am I a good boy? The reason I ask is because someone
                     told me that people say this to all dogs, even if they aren't good...</div>
-                  <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                  <div class="small text-gray-500">Chisken the Dog · 2w</div>
                 </div>
               </a>
               <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>

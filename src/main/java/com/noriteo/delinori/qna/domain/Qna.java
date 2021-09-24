@@ -15,6 +15,7 @@ public class Qna {
     private Long qno;
     private String title, content, writer;
     private LocalDateTime regDate, modDate;
+    private int replyCnt;
 
     public QnaDTO getDTO() {
         QnaDTO qnaDTO = QnaDTO.builder()

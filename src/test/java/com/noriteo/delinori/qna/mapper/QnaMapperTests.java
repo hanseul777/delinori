@@ -23,7 +23,7 @@ public class QnaMapperTests {
     @Test
     public void testDummies() {
 
-        IntStream.rangeClosed(1,30).forEach(i -> {
+        IntStream.rangeClosed(1,31).forEach(i -> {
             Qna qna = Qna.builder()
                     .title("title" + i)
                     .content("content" + i)

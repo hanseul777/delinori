@@ -2,10 +2,12 @@ package com.noriteo.delinori.qna.mapper;
 
 import com.noriteo.delinori.common.dto.PageRequestDTO;
 import com.noriteo.delinori.qna.domain.Qna;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface QnaMapper {
+
     void insert(Qna qna);
 
     List<Qna> getList(PageRequestDTO pageRequestDTO);
@@ -15,5 +17,7 @@ public interface QnaMapper {
     Qna select (Long qno);
 
     int delete(Long qno);
+
+    int updateReplyCnt(@Param("qno") Long qno, @Param("num") int num);
 
 }

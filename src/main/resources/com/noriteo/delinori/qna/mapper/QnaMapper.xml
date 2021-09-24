@@ -21,7 +21,7 @@
     </sql>
 
     <insert id="insert">
-        insert tbl_qna (title,content,writer)
+        insert qna (title,content,writer)
         values (#{title},#{content},#{writer})
         <selectKey order="AFTER" resultType="long" keyProperty="qno">
             select last_insert_id()
@@ -29,21 +29,25 @@
     </insert>
 
     <select id="getList" resultType="com.noriteo.delinori.qna.domain.Qna">
-        select * from tbl_qna
+        select * from qna
         <include refid="search"></include>
         order by qno desc limit #{skip},#{size}
     </select>
 
     <select id="getCount" resultType="int">
-        select count(qno) from tbl_qna
+        select count(qno) from qna
         <include refid="search"></include>
     </select>
 
     <select id="select" resultType="com.noriteo.delinori.qna.domain.Qna">
-        select * from tbl_qna where qno=#{qno}
+        select * from qna where qno=#{qno}
     </select>
 
     <delete id="delete">
-        delete from tbl_qna where qno=#{qno}
+        delete from qna where qno=#{qno}
     </delete>
+
+    <update id="updateReplyCnt">
+        update qna set replyCnt = replyCnt + #{num} where qno = #{qno}
+    </update>
  </mapper>

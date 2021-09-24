@@ -20,6 +20,7 @@ public class QnaDTO {
     private String writer;
     private LocalDateTime regDate;
     private LocalDateTime modDate;
+    private int replyCnt;
 
     public Qna getDomain() {
         Qna qna = Qna.builder()
