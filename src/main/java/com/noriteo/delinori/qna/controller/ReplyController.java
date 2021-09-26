@@ -25,4 +25,24 @@ public class ReplyController {
     public List<ReplyDTO> getQnareplies(@PathVariable(name = "qno") Long qno){
         return replyService.getRepliesWithQno(qno);
     }
+
+    @DeleteMapping("/{rno}")
+    public String remove(@PathVariable(name = "rno") Long rno){
+        log.info("========c        replyRemove========");
+        log.info(rno);
+
+        replyService.remove(rno);
+
+        return "success";
+    }
+
+    @PutMapping("/{rno}")
+    public String modify(@PathVariable(name="rno") Long rno, @RequestBody ReplyDTO replyDTO){
+        log.info("========c        replyModify========");
+        log.info(replyDTO);
+
+        replyService.modify(replyDTO);
+
+        return "sucess";
+    }
 }

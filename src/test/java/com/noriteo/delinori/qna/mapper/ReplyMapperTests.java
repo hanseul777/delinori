@@ -43,4 +43,23 @@ public class ReplyMapperTests {
 
         replyMapper.getListWithQna(qno).forEach(reply -> log.info(reply));
     }
+
+    @Test
+    public void testUpdate(){
+        Reply reply = Reply.builder()
+                .rno(1L)
+                .qno(131L)
+                .replyer("test user")
+                .reply("댓글수정 mapper test")
+                .build();
+
+        log.info(replyMapper.update(reply));
+    }
+
+    @Test
+    public void testDelete(){
+        Long rno = 3L;
+
+        log.info(replyMapper.delete(rno));
+    }
 }

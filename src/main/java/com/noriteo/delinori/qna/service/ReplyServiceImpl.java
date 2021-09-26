@@ -34,4 +34,14 @@ public class ReplyServiceImpl implements ReplyService{
                 .map(reply -> entityToDTO(reply))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public int remove(Long rno) {
+        return replyMapper.delete(rno);
+    }
+
+    @Override
+    public int modify(ReplyDTO replyDTO) {
+        return replyMapper.update(dtoToEntity(replyDTO));
+    }
 }

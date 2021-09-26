@@ -10,6 +10,10 @@ public interface ReplyService {
 
     List<ReplyDTO> getRepliesWithQno(Long qno);
 
+    int remove(Long rno);
+
+    int modify(ReplyDTO replyDTO);
+
     default Reply dtoToEntity(ReplyDTO dto){
 
         Reply reply = Reply.builder()

@@ -82,7 +82,6 @@
     </div>
 </div>
 
-
 <form id="actionForm" action="/qna/list" method="get">
     <input type="hidden" name="page" value="${pageRequestDTO.page}">
     <input type="hidden" name="size" value="${pageRequestDTO.size}">
@@ -122,19 +121,19 @@
 
         function convertTemp(replyObj) {
 
-            const {rno, qno, reply, replyer, replyDate, modDate} = {...replyObj}
+            const {rno, sno, reply, replyer, replyDate, modDate} = {...replyObj}
 
             const temp = `<div class="card mb-4 py-2 border-left-primary shadow">
                           <div class="col-auto " align="right">
-                          <a href="javascript:modReply(\${rno})" class="fas fa-tools fa-1x text-gray-300 m-1"></a>
-                          <a href="javascript:delReply(\${rno})" class="fas fa-trash fa-1x text-gray-300 m-1" data-rno="\${rno}"></a></div>
+                          <a class="fas fa-tools fa-1x text-gray-300 m-1"></a>
+                          <a class="fas fa-trash fa-1x text-gray-300 m-1" href="javascript:delReply(\${rno})" data-rno="\${rno}"></a></div>
                           <div class="ml-4 mb-3">
                           <div class="row no-gutters align-items-start">
                           <div class="col mr-2">
                           <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                           \${rno}--\${replyer}</div>
                           <div class="mod">
-                          <div class="h5 mb-0 font-weight-bold text-gray-800" data-rno='\${rno}' data-replyer='\${replyer}'>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800" data-rno='\${rno}' data-replyer='\${replyer}' data-reply='\${reply}'>
                           \${reply}</div>
                           <div class="text-xs font-weight-light text-secondary text-uppercase mb-1">
                           \${replyDate}</div>
@@ -189,6 +188,14 @@
     }, false)
 
 
+    function delReply(rno) {
+
+        console.log(rno);
+        removeReply(rno).then(result => {
+            getList()
+        })
+
+    }
 
 </script>
 

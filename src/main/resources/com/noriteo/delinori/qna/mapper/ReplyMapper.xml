@@ -12,4 +12,12 @@
         select * from reply_qna where qno = #{qno} order by rno asc
     </select>
 
+    <delete id="delete">
+        delete from reply_qna where rno = #{rno}
+    </delete>
+
+    <update id="update">
+        update reply_qna set reply = #{reply}, modDate = now() where rno = #{rno}
+    </update>
+
 </mapper>

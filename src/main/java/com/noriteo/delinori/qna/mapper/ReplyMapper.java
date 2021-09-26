@@ -9,4 +9,8 @@ public interface ReplyMapper {
     int insert(Reply reply);
 
     List<Reply> getListWithQna(Long qno);
+
+    int delete(Long rno);
+
+    int update(Reply reply);
 }
