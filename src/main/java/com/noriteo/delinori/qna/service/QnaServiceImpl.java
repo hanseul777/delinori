@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-@Transactional
 public class QnaServiceImpl implements QnaService{
 
     private final QnaMapper qnaMapper;
@@ -26,6 +25,12 @@ public class QnaServiceImpl implements QnaService{
         Qna qna = qnaDTO.getDomain();
 
         qnaMapper.insert(qna);
+
+        Long qno = qna.getQno();
+        qna.getAttachList().forEach(attach -> {
+            attach.setQno(qno);
+            qnaMapper.insertAttach(attach);
+        });
 
         return qna.getQno();
     }

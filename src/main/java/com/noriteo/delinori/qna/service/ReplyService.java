@@ -6,6 +6,7 @@ import com.noriteo.delinori.qna.dto.ReplyDTO;
 import java.util.List;
 
 public interface ReplyService {
+
     int add(ReplyDTO replyDTO);
 
     List<ReplyDTO> getRepliesWithQno(Long qno);

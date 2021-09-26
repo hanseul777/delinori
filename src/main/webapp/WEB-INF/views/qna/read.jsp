@@ -2,6 +2,8 @@
 <!--헤더 붙여넣기( 앞으로 이거 긁어 쓰세요 ) -->
 <%@ include file="../includes/header.jsp" %>
 
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <div class="container">
 
     <div class="card o-hidden border-0 shadow-lg my-5">
@@ -41,6 +43,16 @@
                                 <button type="button" class="btn btn-info btnDel">DELETE</button>
                             </div>
                         </form>
+                        <div>
+                        <c:forEach items="${qnaDTO.files}" var="attach">
+                            <div>
+                                <c:if test="${attach.image}">
+                                    <img onclick="javascript:showOrigin('${attach.getFileLink()}')" src="/viewFile?file=${attach.getThumbnail()}">
+                                </c:if>
+                                    ${attach.fileName}
+                            </div>
+                        </c:forEach>
+                        </div>
                     </div>
                     <!-- 댓글 -->
                     <div class="card-header py-3">
@@ -74,8 +86,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -91,6 +104,28 @@
         <input type="hidden" name="keyword" value="${pageRequestDTO.keyword}">
     </c:if>
 </form>
+
+<div class="modal fade" id="modal-sm">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">댓글 수정</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="rno">
+                <input type="text" name="replyMod">
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-primary btnModReply">수정하기</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+</div>
+
 <%@ include file="../includes/footer.jsp" %>
 
 <script>
@@ -114,6 +149,10 @@
 <script src="/resources/js/reply.js"></script>
 <script>
 
+    function showOrigin(fileLink){
+        document.querySelector("#targetImage").src = `/viewFile?file=\${fileLink}`
+    }
+
     function getList() {
 
         const target = document.querySelector(".reply")
@@ -125,15 +164,15 @@
 
             const temp = `<div class="card mb-4 py-2 border-left-primary shadow">
                           <div class="col-auto " align="right">
-                          <a class="fas fa-tools fa-1x text-gray-300 m-1"></a>
-                          <a class="fas fa-trash fa-1x text-gray-300 m-1" href="javascript:delReply(\${rno})" data-rno="\${rno}"></a></div>
+                          <a class="fas fa-tools fa-1x text-gray-300 m-1 ModRno" href="javascript:ModReply(\${rno})" data-rno='\${rno}' data-reply='\${reply}'></a>
+                          <a class="fas fa-trash fa-1x text-gray-300 m-1" href="javascript:delReply(\${rno})" data-rno='\${rno}'></a></div>
                           <div class="ml-4 mb-3">
                           <div class="row no-gutters align-items-start">
                           <div class="col mr-2">
                           <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                           \${rno}--\${replyer}</div>
                           <div class="mod">
-                          <div class="h5 mb-0 font-weight-bold text-gray-800" data-rno='\${rno}' data-replyer='\${replyer}' data-reply='\${reply}'>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800" data-replyer='\${replyer}' data-reply='\${reply}' data-rno='\${rno}'>
                           \${reply}</div>
                           <div class="text-xs font-weight-light text-secondary text-uppercase mb-1">
                           \${replyDate}</div>
@@ -187,6 +226,22 @@
 
     }, false)
 
+    const modModal = $("#modal-sm")
+    const modReply = document.querySelector("input[name='replyMod']")
+    const modRno = document.querySelector("input[name='rno']")
+
+    function ModReply(){
+
+        const rno = document.querySelector(".ModRno").getAttribute("data-rno")
+        const reply = document.querySelector(".ModRno").getAttribute("data-reply")
+
+        console.log(rno,reply)
+
+        modRno.value = rno
+        modReply.value = reply
+
+        modModal.modal('show')
+    }
 
     function delReply(rno) {
 
@@ -194,8 +249,18 @@
         removeReply(rno).then(result => {
             getList()
         })
-
     }
+
+        document.querySelector(".btnModReply").addEventListener("click", (e)=>{
+            const replyObj = {rno:modRno.value ,reply:modReply.value }
+
+            console.log(replyObj)
+
+            modifyReply(replyObj).then(result=> {
+                getList()
+                modModal.modal("hide")
+            })
+        },false)
 
 </script>
 

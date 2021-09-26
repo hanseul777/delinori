@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReplyDTO {
+
     private Long rno;
     private Long qno;
     private String replyer;

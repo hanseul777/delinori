@@ -18,6 +18,10 @@ public class ReplyController {
 
     @PostMapping("")
     public int add(@RequestBody ReplyDTO replyDTO){
+
+        log.info("==========c reply add===========");
+        log.info(replyDTO);
+
         return replyService.add(replyDTO);
     }
 
@@ -38,7 +42,7 @@ public class ReplyController {
 
     @PutMapping("/{rno}")
     public String modify(@PathVariable(name="rno") Long rno, @RequestBody ReplyDTO replyDTO){
-        log.info("========c        replyModify========");
+        log.info("========c        replyModify========" + rno);
         log.info(replyDTO);
 
         replyService.modify(replyDTO);

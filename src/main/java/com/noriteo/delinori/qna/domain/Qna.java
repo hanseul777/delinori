@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Qna {
 
     private Long qno;

@@ -26,6 +26,7 @@ public class QnaDTO {
     private LocalDateTime modDate;
     private int replyCnt;
 
+    @Builder.Default
     private List<UploadResponseDTO> files = new ArrayList<>();
 
     public Qna getDomain() {
