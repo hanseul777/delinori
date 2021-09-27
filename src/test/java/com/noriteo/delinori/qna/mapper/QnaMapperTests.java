@@ -23,11 +23,11 @@ public class QnaMapperTests {
     @Test
     public void testDummies() {
 
-        IntStream.rangeClosed(1,31).forEach(i -> {
+        IntStream.rangeClosed(1,2).forEach(i -> {
             Qna qna = Qna.builder()
-                    .title("title" + i)
-                    .content("content" + i)
-                    .writer("user" + (i % 10))
+                    .title("문의")
+                    .content("개인정보 바꾸고 싶은데 어떻게 해야하나요")
+                    .writer("다은")
                     .build();
 
             qnaMapper.insert(qna);

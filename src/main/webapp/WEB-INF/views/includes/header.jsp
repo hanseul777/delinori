@@ -31,16 +31,10 @@
 
   <!-- Sidebar -->
   <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-    <style>
-      img{
-        height: 25px;
-      }
-    </style>
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
       <div class="sidebar-brand-icon">
-        <img src="/../../resources/img/logo.svg">
+        <img src="/../../resources/img/logo.svg" height="25px">
       </div>
       <div class="sidebar-brand-text mx-3">DELINORI</div>
     </a>
@@ -73,8 +67,8 @@
       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">회원</h6>
-          <a class="collapse-item" href="buttons.html">딜리</a>
-          <a class="collapse-item" href="cards.html">노리</a>
+          <a class="collapse-item" href="#">딜리</a>
+          <a class="collapse-item" href="/member/list">노리</a>
         </div>
       </div>
     </li>

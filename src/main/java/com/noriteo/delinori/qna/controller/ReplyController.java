@@ -4,6 +4,7 @@ import com.noriteo.delinori.qna.dto.ReplyDTO;
 import com.noriteo.delinori.qna.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("")
     public int add(@RequestBody ReplyDTO replyDTO){
 

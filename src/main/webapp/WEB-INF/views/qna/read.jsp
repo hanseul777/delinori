@@ -33,8 +33,7 @@
                             </div>
                             <div class="form-group">
                                 <label>CONTENT</label>
-                                <textarea name="content" class="form-control form-control-user" id="content" disabled>
-                                <c:out value="${qnaDTO.content}"></c:out>
+                                <textarea name="content" class="form-control form-control-user" id="content" disabled><c:out value="${qnaDTO.content}"></c:out>
                                 </textarea>
                             </div>
                             <hr>
@@ -79,8 +78,7 @@
                                     </div>
                                     <hr>
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary operBtn" type="button">
-                                            작성
+                                        <button class="btn btn-primary operBtn" type="button">작성
                                         </button>
                                     </div>
                                 </div>

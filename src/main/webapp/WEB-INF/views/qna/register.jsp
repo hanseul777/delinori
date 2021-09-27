@@ -13,32 +13,41 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">REGISTER</h1>
                         </div>
-                        <form class="user">
+                        <form id="form1" action="/qna/register" method="post">
                             <div class="form-group">
-                                <label for="title">title</label>
-                                <input type="text" name="title" class="form-control form-control-user" id="title"
-                                       placeholder="title">
-                            </div>
-                            <label for="title">title</label>
-                            <div class="form-group">
-                                <input type="text" name="title" class="form-control form-control-user" id="title"
-                                       placeholder="title">
+                                TITLE
+                                <input type="text" name="title" class="form-control form-control-user" id="title">
                             </div>
                             <div class="form-group">
-                                <input type="text" name="title" class="form-control form-control-user" id="title"
-                                       placeholder="title">
+                                WRITER
+                                <input type="text" name="writer" class="form-control form-control-user" id="writer">
                             </div>
-                            <a href="login.html" class="btn btn-primary btn-user btn-block">
-                                Register Account
-                            </a>
+                            <div class="form-group">
+                                CONTENT
+                                <textarea name="content" class="form-control form-control-user" rows="5" id="content"></textarea>
+                            </div>
+                            <div class="form-group">
+                            <button type="submit" id="submitBtn" class="btn btn-primary btn-user btn-block">
+                                문의사항 등록하기
+                           </button>
+                            </div>
                         <hr>
-                        <div class="text-center">
-                            <a class="small" href="forgot-password.html">Forgot Password?</a>
-                        </div>
-                        <div class="text-center">
-                            <a class="small" href="login.html">Already have an account? Login!</a>
-                        </div>
+                        </form>
                     </div>
+                </div>
+
+                <label for="exampleInputFile" class="p-4">첨부파일 등록</label>
+                <div class="input-group p-2">
+                    <div class="custom-file">
+                        <input type="file" name="uploadFiles" class="custom-file-input" id="exampleInputFile" multiple>
+                        <label class="custom-file-label" for="exampleInputFile">파일을 선택하세요</label>
+                    </div>
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="uploadBtn">첨부파일 화면에 업로드하기</span>
+                    </div>
+                </div>
+                <div class="uploadResult">
+
                 </div>
             </div>
         </div>
@@ -49,6 +58,44 @@
 <!--푸터 붙여넣기( 앞으로 이거 긁어 쓰세요 ) -->
 <%@ include file="../includes/footer.jsp" %>
 
-</body>
+<script>
+    const uploadResultDiv = document.querySelector(".uploadResult")
 
+    document.querySelector("#uploadBtn").addEventListener("click", (e)=>{
+
+        const formData = new FormData()
+        const fileInput = document.querySelector("input[name='uploadFiles']")
+
+        for(let i = 0; i<fileInput.files.length; i++){
+            formData.append("uploadFiles",fileInput.files[i])
+        }
+
+        console.log(formData)
+
+        const headerObj = {headers:{'Content-Type':'multipart/form-data'}}
+
+        axios.post("/upload",formData, headerObj).then((response)=>{
+            const arr = response.data()
+            console.log(arr)
+
+            let str = ""
+            for(let i = 0; i <arr.length; i++){
+                const {uuid, fileName, uploadPath, image, thumbnail, fileLink} = {...arr[i]}
+
+                if(image){
+
+                }
+            }
+        })
+    })
+
+    document.querySelector("#submitBtn").addEventListener("click", (e)=> {
+        e.stopPropagation()
+        e.preventDefault()
+        const form1 = document.querySelector("#form1")
+        form1.submit()
+    }, false)
+
+</script>
+</body>
 </html>

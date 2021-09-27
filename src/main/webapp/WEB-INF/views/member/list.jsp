@@ -1,62 +1,66 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!--헤더 붙여넣기( 앞으로 이거 긁어 쓰세요 ) -->
 <%@ include file="../includes/header.jsp" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">문의사항</h1>
+        <h1 class="h3 mb-0 text-gray-800">노리 관리</h1>
+        <a href="/member/register" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">노리 등록</a>
     </div>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">문의사항</h6>
+            <h6 class="m-0 font-weight-bold text-primary">노리 정보</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                     <tr>
-                        <th>QNO</th>
-                        <th>TITLE</th>
-                        <th>WRITER</th>
-                        <th>REGDATE</th>
+                        <th>NORI ID</th>
+                        <th>NAME</th>
+                        <th>ADDRESS</th>
+                        <th>EMAIL</th>
+                        <th>PHONE</th>
+                        <th>ENABLE</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${dtoList}" var="dto">
                         <tr>
-                            <td><c:out value="${dto.qno}"></c:out></td>
-                            <td><a href="javascript:moveRead(${dto.qno})"><c:out value="${dto.title}"></c:out></a></td>
-                            <td><c:out value="${dto.writer}"></c:out></td>
-                            <td><c:out value="${dto.regDate}"></c:out></td>
+                            <td><c:out value="${dto.mid}"></c:out></td>
+                            <td><a href="javascript:moveRead('${dto.mid}')"><c:out value="${dto.mname}"></c:out></a></td>
+                            <td><c:out value="${dto.maddress}"></c:out></td>
+                            <td><c:out value="${dto.memail}"></c:out></td>
+                            <td><c:out value="${dto.mphone}"></c:out></td>
+                            <td><c:out value="${dto.enable}"></c:out></td>
                         </tr>
                     </c:forEach>
                     </tbody>
-                    <form action="/qna/list" method="get">
+                    <form action="/member/list" method="get">
                         <div class="form-group">
-                            <label>검색</label>
+                            <label>노리 검색</label>
                             <select name="type" class="custom-select">
                                 <option value="">----</option>
-                                <option value="T" ${pageRequestDTO.type=="T"?"selected":""}>제목</option>
-                                <option value="TC" ${pageRequestDTO.type=="TC"?"selected":""}>제목 & 내용</option>
-                                <option value="C" ${pageRequestDTO.type=="C"?"selected":""}>내용</option>
-                                <option value="TCW" ${pageRequestDTO.type=="TCW"?"selected":""}>제목 & 내용 & 작성자</option>
+                                <option value="I" ${pageRequestDTO.type=="I"?"selected":""}>아이디</option>
+                                <option value="IN" ${pageRequestDTO.type=="IN"?"selected":""}>아이디 & 이름</option>
+                                <option value="A" ${pageRequestDTO.type=="A"?"selected":""}>주소</option>
+                                <option value="INA" ${pageRequestDTO.type=="INA"?"selected":""}>아이디 & 이름 & 주소</option>
                             </select>
                         </div>
-                            <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="검색내용을 입력하세요."
-                                       aria-label="Search" aria-describedby="basic-addon2" name="keyword" value="${pageRequestDTO.keyword}">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
-                                </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="검색 내용을 입력하세요."
+                                   aria-label="Search" aria-describedby="basic-addon2" name="keyword" value="${pageRequestDTO.keyword}">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
                             </div>
+                        </div>
                         <hr>
                     </form>
                 </table>
@@ -80,8 +84,6 @@
             </div>
         </div>
 
-
-
     </div>
 
 </div>
@@ -89,7 +91,7 @@
 
 </div>
 <!-- End of Main Content -->
-<form id="actionForm" action="/qna/list" method="get">
+<form id="actionForm" action="/member/list" method="get">
     <input type="hidden" name="page" value="${pageMaker.page}">
     <input type="hidden" name="size" value="${pageMaker.size}">
 
@@ -106,9 +108,9 @@
 <script>
     const actionForm = document.querySelector("#actionForm")
 
-    function moveRead(qno){
-        actionForm.setAttribute("action","/qna/read")
-        actionForm.innerHTML += `<input type='hidden' name='qno' value='\${qno}'>`
+    function moveRead(mid){
+        actionForm.setAttribute("action","/member/read")
+        actionForm.innerHTML += `<input type='hidden' name='mid' value='\${mid}'>`
 
         actionForm.submit()
     }
