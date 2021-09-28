@@ -27,6 +27,7 @@ public class QnaServiceImpl implements QnaService{
         qnaMapper.insert(qna);
 
         Long qno = qna.getQno();
+
         qna.getAttachList().forEach(attach -> {
             attach.setQno(qno);
             qnaMapper.insertAttach(attach);

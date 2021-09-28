@@ -42,17 +42,24 @@
                                 <button type="button" class="btn btn-info btnDel">DELETE</button>
                             </div>
                         </form>
-                        <div>
+                    </div>
+
+                    <hr>
+
+                    <div class="p-4 row">
                         <c:forEach items="${qnaDTO.files}" var="attach">
-                            <div>
-                                <c:if test="${attach.image}">
-                                    <img onclick="javascript:showOrigin('${attach.getFileLink()}')" src="/viewFile?file=${attach.getThumbnail()}">
-                                </c:if>
+                            <div class="col-sm-2">
+                                <div>
+                                    <c:if test="${attach.image}">
+                                        <img onclick="javascript:showOrigin('${attach.getFileLink()}')" src="/viewFile?file=${attach.getThumbnail()}">
+                                    </c:if>
+                                </div>
                                     ${attach.fileName}
                             </div>
                         </c:forEach>
-                        </div>
                     </div>
+
+                    <hr>
                     <!-- 댓글 -->
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">REPLY</h6>
@@ -124,6 +131,13 @@
     </div>
 </div>
 
+<div id="modal-imge" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="targetImage">
+    <div id="caption"></div>
+</div>
+
+
 <%@ include file="../includes/footer.jsp" %>
 
 <script>
@@ -143,12 +157,18 @@
     },false)
 
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/resources/js/reply.js"></script>
+
 <script>
+
+    const modalImage = new bootstrap.Modal(document.querySelector("#modal-imge"))
+
 
     function showOrigin(fileLink){
         document.querySelector("#targetImage").src = `/viewFile?file=\${fileLink}`
+        modalImage.show()
     }
 
     function getList() {

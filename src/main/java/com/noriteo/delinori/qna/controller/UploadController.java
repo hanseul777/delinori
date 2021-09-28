@@ -4,32 +4,65 @@ import com.noriteo.delinori.common.dto.UploadResponseDTO;
 import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnailator;
 import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @Log4j2
 public class UploadController {
+
+    @GetMapping("/sample/upload")
+    public void uploadGET(){
+    }
+
+    @ResponseBody
+    @PostMapping("/removeFile")
+    public ResponseEntity<String> removeFile(@RequestBody Map<String ,String> data) throws Exception{
+        File file = new File("/Users/hanseul/upload" + File.separator + data.get("fileName"));
+        boolean checkImage = Files.probeContentType(file.toPath()).startsWith("image");
+
+        file.delete();
+
+        if (checkImage){
+            File thumbnail = new File(file.getParent(), "s_" + file.getName());
+            log.info(thumbnail);
+            thumbnail.delete();
+        }
+        return ResponseEntity.ok().body("deleted");
+    }
+
+    @GetMapping("/downFile")
+    public ResponseEntity<byte[]> download(@RequestParam("file") String fileName)throws Exception{
+        File file = new File("/Users/hanseul/upload" + File.separator + fileName);
+
+        String originalFileName = fileName.substring(fileName.indexOf("_")+1);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/octect-stream");
+        headers.add("Content-Disposition","attachment; filename="
+                + new String(originalFileName.getBytes(StandardCharsets.UTF_8),"ISO-8859-1"));
+        byte[] data = FileCopyUtils.copyToByteArray(file);
+
+        return ResponseEntity.ok().headers(headers).body(data);
+    }
 
     @ResponseBody
     @GetMapping("/viewFile")
     public ResponseEntity<byte[]> viewFile(@RequestParam("file") String fileName)throws Exception{
 
         File file = new File("/Users/hanseul/upload" + File.separator + fileName);
+
+        log.info(file);
 
         ResponseEntity<byte[]> result = null;
 
@@ -48,7 +81,7 @@ public class UploadController {
     @PostMapping("/upload")
     public List<UploadResponseDTO> uploadPost(MultipartFile[] uploadFiles){
 
-        if(uploadFiles != null && uploadFiles.length < 0){
+        if(uploadFiles != null && uploadFiles.length > 0){
             List<UploadResponseDTO> uploadedList = new ArrayList<>();
 
             for(MultipartFile multipartFile : uploadFiles){
@@ -66,11 +99,11 @@ public class UploadController {
     }
 
     private UploadResponseDTO uploadProcess(MultipartFile multipartFile) throws Exception{
-        String uploadPath = "Users/hanseul/upload";
+        String uploadPath = "/Users/hanseul/upload";
 
         String folderName = makeFolder(uploadPath);
 
-        log.info("=================multipartFile================");
+        log.info("=================multipartFile=================");
         log.info(multipartFile.getContentType());
         log.info(multipartFile.getOriginalFilename());
         log.info(multipartFile.getSize());
@@ -88,7 +121,7 @@ public class UploadController {
         boolean checkImage = mimeType.startsWith("image");
         if(checkImage){
             File thumbnailsFile = new File(uploadPath+File.separator + folderName, "s_"+fileName);
-            Thumbnailator.createThumbnail(savedFile,thumbnailsFile,100,100);
+            Thumbnailator.createThumbnail(savedFile,thumbnailsFile,50,50);
         }
         return UploadResponseDTO.builder()
                 .uuid(uuid)
