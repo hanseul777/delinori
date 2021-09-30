@@ -1,5 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
+<sec:authentication property="principal" var="memberDTO"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -121,8 +126,12 @@
     <!-- Main Content -->
     <div id="content">
 
+
+
       <!-- Topbar -->
       <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+
 
         <!-- Sidebar Toggle (Topbar) -->
         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -156,11 +165,49 @@
             </div>
           </li>
 
+
+
+          <div class="login_area">
+
+            <div>
+              <sec:authorize access="isAnonymous()">
+                <%--                        <div class="login_button"><a href="/customLogin">로그인</a> </div>--%>
+                <p class="lg">
+                  <a href="/customLogin" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">로그인</a>
+                </p>
+              </sec:authorize>
+            </div>
+
+            <div>
+              <sec:authorize access="isAuthenticated()">
+                <%--                        <div class="login_success_area">--%>
+                <%--                            <a href="/notice/logout">로그아웃</a>--%>
+                <p class="lg">
+                  <a href="/customLogout" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" >로그아웃</a>
+                    <%--                        </div>--%>
+                </p>
+
+              </sec:authorize>
+            </div>
+          </div>
+
+          <style>
+            .lg{
+              text-align: center;
+              margin-top: 0.5cm;
+
+            }
+          </style>
+
+
           <!-- Nav Item - Alerts -->
           <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-bell fa-fw"></i>
+
+
+
               <!-- Counter - Alerts -->
               <span class="badge badge-danger badge-counter">3+</span>
             </a>
@@ -168,7 +215,7 @@
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="alertsDropdown">
               <h6 class="dropdown-header">
-                Alerts Center
+                알 림
               </h6>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <div class="mr-3">
@@ -177,8 +224,8 @@
                   </div>
                 </div>
                 <div>
-                  <div class="small text-gray-500">December 12, 2019</div>
-                  <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                  <div class="small text-gray-500">방금 전</div>
+                  <span class="font-weight-bold">사용자 권한 업데이트가 필요합니다.</span>
                 </div>
               </a>
               <a class="dropdown-item d-flex align-items-center" href="#">
@@ -188,8 +235,8 @@
                   </div>
                 </div>
                 <div>
-                  <div class="small text-gray-500">December 7, 2019</div>
-                  $290.29 has been deposited into your account!
+                  <div class="small text-gray-500">10분 전</div>
+                  통계 자료가 업데이트 되었습니다.
                 </div>
               </a>
               <a class="dropdown-item d-flex align-items-center" href="#">
@@ -199,11 +246,11 @@
                   </div>
                 </div>
                 <div>
-                  <div class="small text-gray-500">December 2, 2019</div>
-                  Spending Alert: We've noticed unusually high spending for your account.
+                  <div class="small text-gray-500">2021.09.29</div>
+                  인증 되지 않은 사용자의 접근이 감지 되었습니다.
                 </div>
               </a>
-              <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+              <a class="dropdown-item text-center small text-gray-500" href="#">알림 더보기</a>
             </div>
           </li>
 
@@ -228,8 +275,7 @@
                   <div class="status-indicator bg-success"></div>
                 </div>
                 <div class="font-weight-bold">
-                  <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                    problem I've been having.</div>
+                  <div class="text-truncate">마스크로 답답하지만, 마음만은 상쾌한 한 주 보내시길 바랍니다.</div>
                   <div class="small text-gray-500">Emily Fowler · 58m</div>
                 </div>
               </a>
@@ -240,8 +286,7 @@
                   <div class="status-indicator"></div>
                 </div>
                 <div>
-                  <div class="text-truncate">I have the photos that you ordered last month, how
-                    would you like them sent to you?</div>
+                  <div class="text-truncate">딜리노리 관리자님! 오늘기준 회원이 1,0000명이 되었습니다.</div>
                   <div class="small text-gray-500">Jae Chun · 1d</div>
                 </div>
               </a>
@@ -252,20 +297,18 @@
                   <div class="status-indicator bg-warning"></div>
                 </div>
                 <div>
-                  <div class="text-truncate">Last month's report looks great, I am very happy with
-                    the progress so far, keep up the good work!</div>
+                  <div class="text-truncate">딜리노리 관리자님! 금일 조회된 거래건수는 729건 입니다!</div>
                   <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                 </div>
               </a>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <div class="dropdown-list-image mr-3">
                   <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                       alt="...">
+                       alt="…">
                   <div class="status-indicator bg-success"></div>
                 </div>
                 <div>
-                  <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                    told me that people say this to all dogs, even if they aren't good...</div>
+                  <div class="text-truncate">더운 여름도 가고 이제 날씨가 점점 시원해지고 있네요, 가을 같이 좋은 하루 보내시길 바랄게요.</div>
                   <div class="small text-gray-500">Chisken the Dog · 2w</div>
                 </div>
               </a>
@@ -276,4 +319,4 @@
         </ul>
 
       </nav>
-      <!-- End of Topbar -->
+<%--      <!— End of Topbar —>--%>

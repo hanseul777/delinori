@@ -61,13 +61,31 @@
 
                     <hr>
                     <!-- 댓글 -->
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">REPLY</h6>
-                    </div>
                     <div class="col-xl-12 col-md-12 mb-4">
                         <div class="reply">
 
                         </div>
+
+                        <div class="card-footer clearfix">
+                            <ul class="pagination pagination-sm m-0 float-right">
+
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                                        <ul class="pagination">
+                                            <li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">REPLY</h6>
                     </div>
                     <!-- 댓글작성 -->
                     <div id="reply-write" class="card o-hidden border-0 shadow-none my-5">
@@ -85,8 +103,7 @@
                                     </div>
                                     <hr>
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary operBtn" type="button">작성
-                                        </button>
+                                        <button class="btn btn-primary operBtn" type="button">작성</button>
                                     </div>
                                 </div>
                             </div>
@@ -99,16 +116,6 @@
         </div>
     </div>
 </div>
-
-<form id="actionForm" action="/qna/list" method="get">
-    <input type="hidden" name="page" value="${pageRequestDTO.page}">
-    <input type="hidden" name="size" value="${pageRequestDTO.size}">
-
-    <c:if test="${pageRequestDTO.type != null}">
-        <input type="hidden" name="type" value="${pageRequestDTO.type}">
-        <input type="hidden" name="keyword" value="${pageRequestDTO.keyword}">
-    </c:if>
-</form>
 
 <div class="modal fade" id="modal-sm">
     <div class="modal-dialog modal-sm">
@@ -131,8 +138,24 @@
     </div>
 </div>
 
+<form id="actionForm" action="/qna/list" method="get">
+    <input type="hidden" name="page" value="${pageRequestDTO.page}">
+    <input type="hidden" name="size" value="${pageRequestDTO.size}">
+
+    <c:if test="${pageRequestDTO.type != null}">
+        <input type="hidden" name="type" value="${pageRequestDTO.type}">
+        <input type="hidden" name="keyword" value="${pageRequestDTO.keyword}">
+    </c:if>
+</form>
+
+
+<form id="actionReply" action="/replies/list/{qno}/{page}" method="get">
+    <input type="hidden" name="page" value="${pageMaker.page}">
+    <input type="hidden" name="size" value="${pageMaker.size}">
+</form>
+
 <div id="modal-imge" class="modal">
-    <span class="close">&times;</span>
+    <span class="close">&times X &times</span>
     <img class="modal-content" id="targetImage">
     <div id="caption"></div>
 </div>
@@ -143,6 +166,7 @@
 <script>
     const actionForm = document.querySelector("#actionForm")
     const form = document.querySelector("#form1")
+    const actionReply = document.querySelector("#actionReply")
 
     document.querySelector(".btnList").addEventListener("click", ()=>{actionForm.submit()},false)
 
@@ -175,6 +199,7 @@
 
         const target = document.querySelector(".reply")
         const qno = '${qnaDTO.qno}'
+        const page = '${PageRequestDTO.page}'
 
         function convertTemp(replyObj) {
 
@@ -195,22 +220,25 @@
                           <div class="text-xs font-weight-light text-secondary text-uppercase mb-1">
                           \${replyDate}</div>
                           </div>
-                          </div></div></div></div>`
+                          </div></div>
+                        </div></div>`
 
             return temp
 
         }
 
-        getReplyList(qno).then(data => {
+        getReplyList(qno,page).then(data => {
 
             console.log(data)
             let str = ""
 
-            data.forEach(reply => {
-                str += convertTemp(reply)
-            })
-            target.innerHTML = str
+            const {replyCnt, list} = data
 
+            list.forEach(reply =>{
+                str += convertTemp(reply)
+            });
+
+            target.innerHTML = str
         })
     }
 
@@ -269,16 +297,21 @@
         })
     }
 
-        document.querySelector(".btnModReply").addEventListener("click", (e)=>{
-            const replyObj = {rno:modRno.value ,reply:modReply.value }
+    document.querySelector(".btnModReply").addEventListener("click", (e)=>{
+        const replyObj = {rno:modRno.value ,reply:modReply.value }
 
-            console.log(replyObj)
+        console.log(replyObj)
 
-            modifyReply(replyObj).then(result=> {
-                getList()
-                modModal.modal("hide")
-            })
+        modifyReply(replyObj).then(result=> {
+            getList()
+            modModal.modal("hide")
+        })
         },false)
+
+    function movePage(pageNum){
+        actionReply.querySelector("input[name='page']").setAttribute("value",pageNum)
+        actionReply.submit()
+    }
 
 </script>
 

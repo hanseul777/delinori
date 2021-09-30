@@ -1,6 +1,10 @@
 package com.noriteo.delinori.qna.service;
 
+import com.noriteo.delinori.common.dto.PageRequestDTO;
+import com.noriteo.delinori.common.dto.PageResponseDTO;
+import com.noriteo.delinori.common.dto.ReplyResponseDTO;
 import com.noriteo.delinori.qna.domain.Reply;
+import com.noriteo.delinori.qna.dto.QnaDTO;
 import com.noriteo.delinori.qna.dto.ReplyDTO;
 
 import java.util.List;
@@ -14,6 +18,8 @@ public interface ReplyService {
     int remove(Long rno);
 
     int modify(ReplyDTO replyDTO);
+
+    ReplyResponseDTO getRepliesPage(PageRequestDTO pageRequestDTO, Long qno);
 
     default Reply dtoToEntity(ReplyDTO dto){
 

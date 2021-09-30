@@ -1,10 +1,18 @@
 package com.noriteo.delinori.qna.controller;
 
+import com.noriteo.delinori.common.dto.PageRequestDTO;
+import com.noriteo.delinori.common.dto.PageResponseDTO;
+import com.noriteo.delinori.common.dto.ReplyResponseDTO;
+import com.noriteo.delinori.qna.domain.Reply;
+import com.noriteo.delinori.qna.dto.QnaDTO;
 import com.noriteo.delinori.qna.dto.ReplyDTO;
 import com.noriteo.delinori.qna.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,9 +35,30 @@ public class ReplyController {
         return replyService.add(replyDTO);
     }
 
-    @GetMapping("/list/{qno}")
-    public List<ReplyDTO> getQnareplies(@PathVariable(name = "qno") Long qno){
-        return replyService.getRepliesWithQno(qno);
+//    @ResponseBody
+//    @GetMapping("/list/{qno}")
+//    public List<ReplyDTO> getQnareplies(@PathVariable(name = "qno") Long qno){
+//        return replyService.getReplies(qno);
+//    }
+
+    @ResponseBody
+    @GetMapping("/list/{qno}/{page}")
+    public ReplyResponseDTO getQnaReplies(@PathVariable(name = "qno") Long qno , @PathVariable(name="page") int page){
+
+        log.info("===================c  getQnaReplies================");
+
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(page)
+                .size(10).build();
+
+        log.info("=====================================");
+        log.info("qno : " + qno);
+        log.info("pageRequestDTO : " + pageRequestDTO);
+
+        List<ReplyDTO> replyDTOList = replyService.getRepliesWithQno(qno);
+        int replyCount = 200;
+
+        return ReplyResponseDTO.<ReplyDTO>builder().replyCnt(replyCount).list(replyDTOList).build();
     }
 
     @DeleteMapping("/{rno}")

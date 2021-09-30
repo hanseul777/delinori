@@ -1,7 +1,9 @@
 package com.noriteo.delinori.qna.mapper;
 
 import com.noriteo.delinori.common.config.RootConfig;
+import com.noriteo.delinori.common.dto.PageRequestDTO;
 import com.noriteo.delinori.qna.config.QnaRootConfig;
+import com.noriteo.delinori.qna.domain.Qna;
 import com.noriteo.delinori.qna.domain.Reply;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 @Log4j2
@@ -22,7 +25,7 @@ public class ReplyMapperTests {
 
     @Test
     public void insertDumies(){
-        long[] arr = {131L, 130L, 129L, 128L, 127L};
+        long[] arr = {141L, 140L, 139L, 138L, 137L};
 
         IntStream.rangeClosed(1,100).forEach(num ->{
             long qno = arr[((int)(Math.random() * 1000)) % 5];
@@ -39,9 +42,9 @@ public class ReplyMapperTests {
 
     @Test
     public void testList(){
-        Long qno = 131L;
+        Long qno = 141L;
 
-        replyMapper.getListWithQna(qno).forEach(reply -> log.info(reply));
+        replyMapper.getList(qno).forEach(reply -> log.info(reply));
     }
 
     @Test
@@ -61,5 +64,17 @@ public class ReplyMapperTests {
         Long rno = 3L;
 
         log.info(replyMapper.delete(rno));
+    }
+
+    @Test
+    public void testReplyPage(){
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(1)
+                .size(10).build();
+
+        List<Reply> replies = replyMapper.getListWithQna(137L,pageRequestDTO);
+
+        replies.forEach(reply -> log.info(reply));
+
     }
 }

@@ -60,6 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
         http.exceptionHandling()
                 .authenticationEntryPoint(customAuthenticationEntryPoint());
+
+        http.formLogin().defaultSuccessUrl("/qna/list");
     }
 
     @Bean

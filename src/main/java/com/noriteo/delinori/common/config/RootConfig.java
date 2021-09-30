@@ -34,6 +34,7 @@ public class RootConfig {
         config.setJdbcUrl("jdbc:log4jdbc:mysql://106.241.252.51:1524/delinori");
         config.setUsername("delinori");
         config.setPassword("delinoripw");
+        config.setMaximumPoolSize(3);
         HikariDataSource dataSource = new HikariDataSource(config);
         return dataSource;
 

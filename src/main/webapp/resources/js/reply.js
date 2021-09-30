@@ -48,8 +48,13 @@ const doE = async (reply) => { //reply 데이터를 주면 awit (async 다음은
     return response.data
 }
 
-const getReplyList = async (qno) => {
-    const response = await axios.get(`/replies/list/${qno}`)
+const getReplyList = async (qno,page) => {
+
+    const pageValue = page || 1
+
+    const response = await axios.get(`/replies/list/${qno}/${pageValue}`)
+    console.log("qno : " + qno)
+    console.log("page : " + page)
     return response.data
 }
 

@@ -9,8 +9,16 @@
         values (#{qno}, #{replyer}, #{reply})
     </insert>
 
+<!--    <select id="getList" resultType="com.noriteo.delinori.qna.domain.Reply">-->
+<!--        select * from reply_qna where qno = #{qno} order by rno asc-->
+<!--    </select>-->
+
     <select id="getListWithQna" resultType="com.noriteo.delinori.qna.domain.Reply">
-        select * from reply_qna where qno = #{qno} order by rno asc
+        select * from reply_qna where qno = #{qno} order by rno asc limit #{pageRequestDTO.skip},#{pageRequestDTO.size}
+    </select>
+
+    <select id="replyCount" resultType="int">
+        select count(rno) from reply_qna where qno = #{qno}
     </select>
 
     <delete id="delete">

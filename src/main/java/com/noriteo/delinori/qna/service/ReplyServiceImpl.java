@@ -1,5 +1,7 @@
 package com.noriteo.delinori.qna.service;
 
+import com.noriteo.delinori.common.dto.PageRequestDTO;
+import com.noriteo.delinori.common.dto.ReplyResponseDTO;
 import com.noriteo.delinori.qna.dto.ReplyDTO;
 import com.noriteo.delinori.qna.mapper.QnaMapper;
 import com.noriteo.delinori.qna.mapper.ReplyMapper;
@@ -30,9 +32,18 @@ public class ReplyServiceImpl implements ReplyService{
 
     @Override
     public List<ReplyDTO> getRepliesWithQno(Long qno) {
-        return replyMapper.getListWithQna(qno).stream()
+        return replyMapper.getListWithQna(qno, PageRequestDTO.builder().build()).stream()
                 .map(reply -> entityToDTO(reply))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ReplyResponseDTO getRepliesPage(PageRequestDTO pageRequestDTO, Long qno) {
+
+        return new ReplyResponseDTO(
+                replyMapper.getCountReplies(qno),
+                replyMapper.getListWithQna(qno,pageRequestDTO)
+        );
     }
 
     @Override

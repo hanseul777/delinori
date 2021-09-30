@@ -57,7 +57,7 @@ public class QnaController {
 
     }
 
-//    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/read")
     public void read(Long qno, PageRequestDTO pageRequestDTO, Model model) {
 
