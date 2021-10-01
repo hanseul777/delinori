@@ -15,7 +15,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.noriteo.delinori.common.exception","com.noriteo.delinori.qna.controller"})
-@Import(QnaServletConfig.class)
+@Import(value = {QnaServletConfig.class})
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ServletConfig implements WebMvcConfigurer {
 

@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-@Transactional
 public class ReplyServiceImpl implements ReplyService{
 
     private final ReplyMapper replyMapper;

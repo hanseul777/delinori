@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@Import(QnaRootConfig.class)
+@Import(value = {QnaRootConfig.class})
 public class RootConfig {
 
     @Bean //mybatis 연결

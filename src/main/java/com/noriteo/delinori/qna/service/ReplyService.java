@@ -6,9 +6,11 @@ import com.noriteo.delinori.common.dto.ReplyResponseDTO;
 import com.noriteo.delinori.qna.domain.Reply;
 import com.noriteo.delinori.qna.dto.QnaDTO;
 import com.noriteo.delinori.qna.dto.ReplyDTO;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 public interface ReplyService {
 
     int add(ReplyDTO replyDTO);

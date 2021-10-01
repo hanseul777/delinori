@@ -96,7 +96,7 @@
       <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">게시판</h6>
-          <a class="collapse-item" href="login.html">공지사항게시판</a>
+          <a class="collapse-item" href="/notice/list">공지사항게시판</a>
           <a class="collapse-item" href="/qna/list">문의게시판</a>
           <a class="collapse-item" href="forgot-password.html">거래게시판</a>
           <a class="collapse-item" href="forgot-password.html">자유게시판</a>
